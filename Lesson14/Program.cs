@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Lesson14
 {
@@ -14,7 +15,7 @@ namespace Lesson14
         public float price;
         public int quantity;
 
-        public Products(string? name, float price, int quantity)
+        public Products(string name, float price, int quantity)
         {
             this.name = name;
             this.price = price;
@@ -40,6 +41,42 @@ namespace Lesson14
         {
 
         }
+    }
+
+    public class ShopInterface
+    {
+        public ShopInterface()
+        {
+
+        }
+
+        public void Inteface()
+        {
+            Console.WriteLine("Enter number");
+            Console.WriteLine("1. Buy product");
+            Console.WriteLine("2.List of products");
+            Console.WriteLine("3. Get receipts");
+            Console.WriteLine("4.Add products");
+
+            int index = int.Parse(Console.ReadLine());
+
+            switch(index)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                default:
+                    Console.WriteLine("Invalid value");
+                    break;
+            }
+
+        }
+
     }
 
     class Programme
