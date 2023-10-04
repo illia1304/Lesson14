@@ -3,12 +3,6 @@ using System.Diagnostics;
 
 namespace Lesson14
 {
-    /*1.Goods
-      2. buyers
-      3. shop
-      4.receipts 
-    */
-
     struct Products
     {
         public string name;
@@ -58,9 +52,11 @@ namespace Lesson14
             {
                 if (products[i].name == name)
                 {
-                    buyers[countP] = new Buyer($"buyer{countB}", countB, products[i].price * products[i].quantity);
+                    Console.WriteLine("Enter the quantity you want to buy");
+                    int quantityP = int.Parse(Console.ReadLine());
+                    buyers[countP] = new Buyer($"buyer{countB}", countB, products[i].price * quantityP);
 
-                    products[i].quantity--;
+                    products[i].quantity-=quantityP;
                 }
             }
             
@@ -74,9 +70,9 @@ namespace Lesson14
         }
         public void Receips()
         {
-            for(int i = 1; i <= buyers.Length; i++)
+            for(int i = 0; i < countB; i++)
             {
-                Console.WriteLine($"{buyers[i].name}{i}, {buyers[i].id}, {buyers[i].spentMoney}");
+                Console.WriteLine($"Buyer{i}, {buyers[i].id}, {buyers[i].spentMoney}");
             }
         }
         public void AddProduct(string name, float price, int quantity)
