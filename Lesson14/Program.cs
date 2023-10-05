@@ -8,7 +8,7 @@ namespace Lesson14
 
     public class ProductCart
     {
-        public Dictionary<Product, int> Products { get; set; } = new();
+        public Dictionary<Product, int> ProductsInCart { get; set; } = new();
 
         public float Amount
         {
@@ -16,7 +16,7 @@ namespace Lesson14
             get{
                 float amount = 0;
 
-                foreach (var item in Products)
+                foreach (var item in ProductsInCart)
                 {
                     amount += item.Key.price * item.Value;
                 }
@@ -26,10 +26,52 @@ namespace Lesson14
             
         }
     }
-
+    
     public class Shop
     {
-        //відповідальність:зберігати кількість товару, продавати, додавати товар, показувати товар
+        Dictionary<Product, int> products = new();
+        ProductCart productCar = new ProductCart();
+        
+
+        public Shop()
+        {
+
+        }
+        public void AddProduct(Product product, int quantity)
+        {
+            products.Add(product, quantity);
+        }
+        public void RemoveProduct(Product product)
+        {
+            products.Remove(product);
+        }
+
+        public void SellProducts()
+        {
+            Console.WriteLine("What product do you want to buy?");
+            string s=Console.ReadLine();
+            Console.WriteLine("How many items do you want buy?");
+            
+            int count = int.Parse(Console.ReadLine());
+
+            foreach (var item in products)
+            {
+                if (products.Equals(s))
+                {
+                    products[item.Key] -= count;
+
+                    productCar.ProductsInCart[item.Key] = products[item.Key];
+                }
+            }
+        }
+        public void ListOfProduct()
+        {
+
+        }
+
+
+
+        //відповідальність:зберігати товар, продавати, додавати товар, показувати товар, видаляти товар
     }
 
     public class ShopInterface : Shop
@@ -52,7 +94,7 @@ namespace Lesson14
             switch (index)
             {
                 case 1:
-
+                    SellProducts();
                     break;
                 case 2:
 
@@ -72,14 +114,22 @@ namespace Lesson14
 
     public class Recipe
     {
-        //друкувати чеки
-        /*Чек
-          Ім'я покупця
-          Товар1
-          Товар2
-          Ціна
-          Дата
-         */
+        Buyer buyer;
+        ProductCart productCart;
+
+        public Recipe()
+        {
+
+        }
+
+        public void PrintRecipe() 
+        {
+            Console.Write($@"RECIPE
+{buyer.BuyerName}
+{productCart.ProductsInCart.Keys} {productCart.ProductsInCart.Values}
+{productCart.Amount}
+");
+        }
     }
 
 
@@ -88,12 +138,8 @@ namespace Lesson14
         static void Main(string[] args)
         {
             Shop shop = new Shop();
-            ShopInterface shopInterface = new ShopInterface();
 
-            while(true)
-            {
-                shopInterface.Inteface();
-            }
+            Product product = new Product("car", 32);
         }
     }
 }
