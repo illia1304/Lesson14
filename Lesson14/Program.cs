@@ -3,92 +3,36 @@ using System.Diagnostics;
 
 namespace Lesson14
 {
-    struct Products
+    public record Product(string name, float price);
+    public record Buyer(string BuyerName);
+
+    public class ProductCart
     {
-        public string name;
-        public float price;
-        public int quantity;
+        public Dictionary<Product, int> Products { get; set; } = new();
 
-        public Products(string name, float price, int quantity)
+        public float Amount
         {
-            this.name = name;
-            this.price = price;
-            this.quantity = quantity;
-        }
-    }
+            
+            get{
+                float amount = 0;
 
-    public struct Buyer
-    {
-        public string name;
-        public int id;
-        public float spentMoney;
+                foreach (var item in Products)
+                {
+                    amount += item.Key.price * item.Value;
+                }
+                return amount;
+            }
 
-        public Buyer(string name, int id, float spentMoney)
-        {
-            this.name = name;
-            this.id = id;
-            this.spentMoney = spentMoney;
+            
         }
     }
 
     public class Shop
     {
-        Products[] products = new Products[10];
-        int countP = 0;
-
-        Buyer[] buyers = new Buyer[10];
-        int countB = 1;
-        public Shop()
-        {
-
-        }
-
-        public void BuyProduct()
-        {
-            Console.WriteLine("What product do you want to buy?");
-            string name = Console.ReadLine();
-
-            for(int i = 0; i < products.Length; i++)
-            {
-                if (products[i].name == name)
-                {
-                    Console.WriteLine("Enter the quantity you want to buy");
-                    int quantityP = int.Parse(Console.ReadLine());
-                    buyers[countP] = new Buyer($"buyer{countB}", countB, products[i].price * quantityP);
-
-                    products[i].quantity-=quantityP;
-                }
-            }
-            
-        }
-        public void ListOfProducts()
-        {
-            for (int i = 0; i < countP; i++)
-            {
-                Console.WriteLine($"{products[i].name}, {products[i].price}, {products[i].quantity}");
-            }
-        }
-        public void Receips()
-        {
-            for(int i = 0; i < countB; i++)
-            {
-                Console.WriteLine($"Buyer{i}, {buyers[i].id}, {buyers[i].spentMoney}");
-            }
-        }
-        public void AddProduct(string name, float price, int quantity)
-        {
-            if(products.Length > countP)
-            {
-                products[countP] = new Products(name, price, quantity);
-                countP++;
-
-                Console.WriteLine("Product added");
-            }
-
-        }
+        //відповідальність:зберігати кількість товару, продавати, додавати товар, показувати товар
     }
 
-    public class ShopInterface: Shop
+    public class ShopInterface : Shop
     {
         public ShopInterface()
         {
@@ -105,27 +49,18 @@ namespace Lesson14
 
             int index = int.Parse(Console.ReadLine());
 
-            switch(index)
+            switch (index)
             {
                 case 1:
-                    BuyProduct();
+
                     break;
                 case 2:
-                    ListOfProducts();
+
                     break;
                 case 3:
-                    Receips();
+
                     break;
                 case 4:
-                    Console.WriteLine("Enter name of product:");
-                    string name = Console.ReadLine();
-                    Console.WriteLine("Enter price of product:");
-                    float price = float.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter quantity of product:");
-                    int quantity = int.Parse(Console.ReadLine());
-                    
-                    
-                    AddProduct(name, price, quantity);
                     break;
                 default:
                     Console.WriteLine("Invalid value");
@@ -133,8 +68,20 @@ namespace Lesson14
             }
 
         }
-
     }
+
+    public class Recipe
+    {
+        //друкувати чеки
+        /*Чек
+          Ім'я покупця
+          Товар1
+          Товар2
+          Ціна
+          Дата
+         */
+    }
+
 
     class Programme
     {
