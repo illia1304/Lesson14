@@ -13,7 +13,7 @@ namespace Lesson14
             Console.Write("Do you want to continue shopping? (yes/no)");
 
             string answer = Console.ReadLine().ToLower();
-            if(answer == "yes")
+            if (answer == "yes")
             {
                 return true;
             }
@@ -29,11 +29,11 @@ namespace Lesson14
         private bool wasBought = false;
 
         public Product GetProductByName(string productName)
-            {
+        {
             foreach (var product in products.Keys)
             {
-               if (product.name == productName)
-               {
+                if (product.name == productName)
+                {
                     return product;
                 }
             }
@@ -91,7 +91,7 @@ namespace Lesson14
         public Buyer buyer = new();
         ProductManeger productManeger = new ProductManeger();
         public float totalAmount = 0;
-        
+
         public void PrintReciept()
         {
             Console.WriteLine("***Receipt:***");
@@ -141,7 +141,7 @@ namespace Lesson14
         private UserInteraction userInteraction = new UserInteraction();
         public ShopInterface()
         {
-            
+
         }
         public void Inteface()
         {
@@ -150,64 +150,73 @@ namespace Lesson14
             Console.WriteLine("2. List of products");
             Console.WriteLine("3. Add products");
             Console.WriteLine("4. Buyer name change");
-            int index = int.Parse(Console.ReadLine());
-
-            switch (index)
-            {
-                case 1:
-                    Console.WriteLine("Enter product's name which you want to buy:");
-                    string name = Console.ReadLine();
-                    Console.WriteLine("Enter product's quantity which you want to buy:");
-                    int quantity = int.Parse(Console.ReadLine());
-                    Product product = productManeger.GetProductByName(name);
-
-                    if (productManeger.BuyProduct(product, quantity))
-                    {
-                        recieptManeger.AddPurchase(product, quantity, buyer.name);
-                    }
-                    if (!userInteraction.ContinueShopping())
-                    {
-                        recieptManeger.PrintReciept();
-                        recieptManeger.ClearReciept();
-                    }
-                    break;
-                case 2:
-                    productManeger.ListOfProducts();
-                    break;
-                case 3:
-                    Console.WriteLine("Enter name of product:");
-                    string _name = Console.ReadLine();
-                    Console.WriteLine("Enter price of product:");
-                    float price = float.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter quantity of product:");
-                    int _quantity = int.Parse(Console.ReadLine());
-                    productManeger.AddProduct(new Product(_name, price), _quantity);
-                    break;
-                case 4:
-                   Console.Write("Enter new buyer's name: ");
-                   string newName = Console.ReadLine();
-                   buyer = new Buyer(newName);
-                   Console.WriteLine($"Buyer's name changed to {buyer.name}");
-                   break;
-                default:
-                   Console.WriteLine("Invalid value");
-                   break;
-            }
             
-        }
-    }
-
-    class Programme
-    {
-        static void Main(string[] args)
-        {
-            ProductManeger productManeger = new ProductManeger();
-            RecieptManeger recieptManeger = new RecieptManeger();
-            ShopInterface shopInterface = new ShopInterface();
-
-            while (true)
+            try
             {
-                shopInterface.Inteface();
+                int index = int.Parse(Console.ReadLine());
+                switch (index)
+                {
+                    case 1:
+                        Console.WriteLine("Enter product's name which you want to buy:");
+                        string name = Console.ReadLine();
+                        Console.WriteLine("Enter product's quantity which you want to buy:");
+                        int quantity = int.Parse(Console.ReadLine());
+                        Product product = productManeger.GetProductByName(name);
+
+                        if (productManeger.BuyProduct(product, quantity))
+                        {
+                            recieptManeger.AddPurchase(product, quantity, buyer.name);
+                        }
+                        if (!userInteraction.ContinueShopping())
+                        {
+                            recieptManeger.PrintReciept();
+                            recieptManeger.ClearReciept();
+                        }
+                        break;
+                    case 2:
+                        productManeger.ListOfProducts();
+                        break;
+                    case 3:
+                        Console.WriteLine("Enter name of product:");
+                        string _name = Console.ReadLine();
+                        Console.WriteLine("Enter price of product:");
+                        float price = float.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter quantity of product:");
+                        int _quantity = int.Parse(Console.ReadLine());
+                        productManeger.AddProduct(new Product(_name, price), _quantity);
+                        break;
+                    case 4:
+                        Console.Write("Enter new buyer's name: ");
+                        string newName = Console.ReadLine();
+                        buyer = new Buyer(newName);
+                        Console.WriteLine($"Buyer's name changed to {buyer.name}");
+                        break;
+                    default:
+                        Console.WriteLine("Invalid value");
+                        break;
+                }
+
+
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Enter right format of answer and don't try break my program!!!!");
+            }
+
+        }
+
+        class Programme
+        {
+            static void Main(string[] args)
+            {
+                ProductManeger productManeger = new ProductManeger();
+                RecieptManeger recieptManeger = new RecieptManeger();
+                ShopInterface shopInterface = new ShopInterface();
+
+                while (true)
+                {
+                    shopInterface.Inteface();
+                }
             }
         }
     }
